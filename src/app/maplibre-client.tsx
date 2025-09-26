@@ -40,13 +40,13 @@ export default function LeafletClient() {
       const bali = L.latLng(-8.4095, 115.1889);
       const chiangMai = L.latLng(18.7883, 98.9853);
 
-      L.circleMarker(bali, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 })
+      const mBali = L.circleMarker(bali, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 })
         .addTo(map)
-        .bindTooltip("currently", { permanent: true, direction: "top", offset: [0, -10] });
+        .bindTooltip("currently", { direction: "top", offset: [0, -10] });
 
-      L.circleMarker(chiangMai, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 })
+      const mChiang = L.circleMarker(chiangMai, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 })
         .addTo(map)
-        .bindTooltip("next", { permanent: true, direction: "top", offset: [0, -10] });
+        .bindTooltip("next", { direction: "top", offset: [0, -10] });
 
       const bounds = L.latLngBounds([bali, chiangMai]);
       map.fitBounds(bounds, { padding: [80, 80] });
@@ -54,6 +54,20 @@ export default function LeafletClient() {
       const resize = () => { try { map?.invalidateSize(); } catch {} };
       window.addEventListener("resize", resize);
       setTimeout(resize, 50);
+
+      const syncTooltips = () => {
+        const show = document.body.classList.contains("map-only");
+        if (show) {
+          mBali.openTooltip();
+          mChiang.openTooltip();
+        } else {
+          mBali.closeTooltip();
+          mChiang.closeTooltip();
+        }
+      };
+      const mo = new MutationObserver(syncTooltips);
+      mo.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+      syncTooltips();
     })();
 
     return () => {
