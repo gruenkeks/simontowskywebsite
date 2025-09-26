@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 
 export default function LeafletClient() {
   useEffect(() => {
-    let map: any;
+    let map: import("leaflet").Map | null = null;
     (async () => {
       const el = document.getElementById("bg-map");
       if (!el) return;
@@ -46,7 +46,7 @@ export default function LeafletClient() {
       const bounds = L.latLngBounds([bali, chiangMai]);
       map.fitBounds(bounds, { padding: [80, 80] });
 
-      const resize = () => { try { map.invalidateSize(); } catch {} };
+      const resize = () => { try { map?.invalidateSize(); } catch {} };
       window.addEventListener("resize", resize);
       setTimeout(resize, 50);
     })();
