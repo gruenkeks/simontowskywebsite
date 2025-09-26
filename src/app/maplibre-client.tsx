@@ -40,8 +40,13 @@ export default function LeafletClient() {
       const bali = L.latLng(-8.4095, 115.1889);
       const chiangMai = L.latLng(18.7883, 98.9853);
 
-      L.circleMarker(bali, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 }).addTo(map);
-      L.circleMarker(chiangMai, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 }).addTo(map);
+      L.circleMarker(bali, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 })
+        .addTo(map)
+        .bindTooltip("currently", { permanent: true, direction: "top", offset: [0, -10] });
+
+      L.circleMarker(chiangMai, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 })
+        .addTo(map)
+        .bindTooltip("next", { permanent: true, direction: "top", offset: [0, -10] });
 
       const bounds = L.latLngBounds([bali, chiangMai]);
       map.fitBounds(bounds, { padding: [80, 80] });
