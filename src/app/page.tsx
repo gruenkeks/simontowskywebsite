@@ -60,7 +60,7 @@ export default function Home() {
       <section className="relative z-[1] w-full max-w-[1400px] mx-auto px-6 py-8 grid min-h-[100svh] grid-cols-[1fr_auto_1fr] items-center justify-items-center">
         {/* Center column with text */}
         <div ref={blockRef} className="col-start-2 text-center">
-          <h1 ref={titleRef} className="m-0 font-extrabold tracking-tight leading-[1.04] text-[clamp(44px,6.4vw,80px)] whitespace-nowrap">
+          <h1 ref={titleRef} className="hide-on-map m-0 font-extrabold tracking-tight leading-[1.04] text-[clamp(44px,6.4vw,80px)] whitespace-nowrap">
             Dennis Simontowsky
           </h1>
           <div
@@ -70,13 +70,13 @@ export default function Home() {
           >
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-lg border border-[color:var(--line)] bg-white/5 hover:bg-white/15 transition"
+              className="globe-btn inline-flex items-center justify-center rounded-lg border border-[color:var(--line)] bg-white/5 hover:bg-white/15 transition"
               aria-label="Show travel map"
               title="Show travel map"
-              onMouseEnter={() => document.body.classList.add("map-reveal")}
-              onMouseLeave={() => document.body.classList.remove("map-reveal")}
-              onFocus={() => document.body.classList.add("map-reveal")}
-              onBlur={() => document.body.classList.remove("map-reveal")}
+              onMouseEnter={() => { document.body.classList.add("map-reveal"); document.body.classList.add("map-only"); }}
+              onMouseLeave={() => { document.body.classList.remove("map-reveal"); document.body.classList.remove("map-only"); }}
+              onFocus={() => { document.body.classList.add("map-reveal"); document.body.classList.add("map-only"); }}
+              onBlur={() => { document.body.classList.remove("map-reveal"); document.body.classList.remove("map-only"); }}
               style={{ width: "var(--iconSize)", height: "var(--iconSize)" }}
             >
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden style={{ width: "calc(var(--iconSize) * 0.5)", height: "calc(var(--iconSize) * 0.5)" }}>
@@ -88,7 +88,7 @@ export default function Home() {
               </svg>
             </button>
             <a
-              className="inline-flex items-center justify-center rounded-lg border border-[color:var(--line)] bg-white/5 hover:bg-white/15 transition"
+              className="hide-on-map inline-flex items-center justify-center rounded-lg border border-[color:var(--line)] bg-white/5 hover:bg-white/15 transition"
               href="mailto:dennis@simontowsky.com"
               aria-label="E-Mail an dennis@simontowsky.com senden"
               style={{ width: "var(--iconSize)", height: "var(--iconSize)" }}
@@ -99,7 +99,7 @@ export default function Home() {
               </svg>
             </a>
             <a
-              className="inline-flex items-center justify-center rounded-lg border border-[color:var(--line)] bg-white/5 hover:bg-white/15 transition"
+              className="hide-on-map inline-flex items-center justify-center rounded-lg border border-[color:var(--line)] bg-white/5 hover:bg-white/15 transition"
               href="https://wa.me/4917621280315"
               target="_blank"
               rel="noopener"
@@ -109,7 +109,7 @@ export default function Home() {
               <img src="https://cdn.simpleicons.org/whatsapp/ffffff" alt="" style={{ width: "calc(var(--iconSize) * 0.5)", height: "calc(var(--iconSize) * 0.5)" }} />
             </a>
             <a
-              className="inline-flex items-center justify-center rounded-lg border border-[color:var(--line)] bg-white/5 hover:bg-white/15 transition"
+              className="hide-on-map inline-flex items-center justify-center rounded-lg border border-[color:var(--line)] bg-white/5 hover:bg-white/15 transition"
               href="https://instagram.com/dennissimontowsky"
               target="_blank"
               rel="noopener"
@@ -122,7 +122,7 @@ export default function Home() {
         </div>
 
         {/* Right column with portrait */}
-        <div className="col-start-3 justify-self-start z-[2] ml-6">
+        <div className="col-start-3 justify-self-start z-[2] ml-6 hide-on-map">
           <div className="relative" style={{ width: "var(--portraitSize, 240px)", height: "var(--portraitSize, 240px)" }}>
             <div className="absolute -left-[14%] top-[12%] w-[42%] h-[42%] rounded-full bg-[radial-gradient(closest-side,rgba(180,120,255,0.35),rgba(180,120,255,0)_70%)] blur-[2px]" aria-hidden />
             <div className="absolute inset-0 rounded-full p-3 bg-[linear-gradient(145deg,rgba(255,255,255,0.18),rgba(255,255,255,0.04))] shadow-[0_12px_50px_rgba(0,0,0,0.45),inset_0_0_0_1px_rgba(255,255,255,0.06)]">
@@ -140,13 +140,16 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="relative z-[1] border-t border-[color:var(--line)] px-6 py-4 text-xs text-[color:var(--muted)]">
+      <footer className="relative z-[1] border-t border-[color:var(--line)] px-6 py-4 text-xs text-[color:var(--muted)] hide-on-map">
         © {new Date().getFullYear()} Dennis Simontowsky
       </footer>
 
       <style jsx global>{`
         body.map-reveal #bg-map { opacity: 0.45; }
+        body.map-only #bg-map { opacity: 0.95; }
         .maplibregl-ctrl-attrib { display: none !important; }
+        body.map-only .hide-on-map { opacity: 0; visibility: hidden; pointer-events: none; transform: scale(0.98); transition: opacity 180ms ease, transform 180ms ease; }
+        body.map-only .globe-btn { position: relative; z-index: 3; }
       `}</style>
     </main>
   );
