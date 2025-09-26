@@ -129,7 +129,7 @@ export default function Home() {
               aria-label="WhatsApp chat with Dennis"
               style={{ width: "var(--iconSize)", height: "var(--iconSize)" }}
             >
-              <img src="https://cdn.simpleicons.org/whatsapp/ffffff" alt="" style={{ width: "calc(var(--iconSize) * 0.5)", height: "calc(var(--iconSize) * 0.5)" }} />
+              <Image src="https://cdn.simpleicons.org/whatsapp/ffffff" alt="" width={36} height={36} style={{ width: "calc(var(--iconSize) * 0.5)", height: "calc(var(--iconSize) * 0.5)" }} />
             </a>
             <a
               className="hide-on-map inline-flex items-center justify-center rounded-lg border border-[color:var(--line)] bg-white/5 hover:bg-white/15 transition"
@@ -139,7 +139,7 @@ export default function Home() {
               aria-label="Instagram profile @dennissimontowsky"
               style={{ width: "var(--iconSize)", height: "var(--iconSize)" }}
             >
-              <img src="https://cdn.simpleicons.org/instagram/ffffff" alt="" style={{ width: "calc(var(--iconSize) * 0.5)", height: "calc(var(--iconSize) * 0.5)" }} />
+              <Image src="https://cdn.simpleicons.org/instagram/ffffff" alt="" width={36} height={36} style={{ width: "calc(var(--iconSize) * 0.5)", height: "calc(var(--iconSize) * 0.5)" }} />
             </a>
           </div>
         </div>

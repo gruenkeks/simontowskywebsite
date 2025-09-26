@@ -9,13 +9,13 @@ export default function LeafletClient() {
     const el = document.getElementById("bg-map");
     if (!el) return;
 
-    // Falls bereits instanziiert, aufräumen
-    // @ts-ignore
-    if (el._leaflet_id) {
+    // Container bereinigen, falls bereits eine Leaflet-Instanz existiert
+    const anyEl = el as unknown as { _leaflet_id?: number } & HTMLElement;
+    if (anyEl._leaflet_id) {
       try {
-        // @ts-ignore
-        el._leaflet_id = null;
-      } catch (_) {}
+        anyEl.innerHTML = "";
+        anyEl._leaflet_id = undefined;
+      } catch {}
     }
 
     const map = L.map(el, {
@@ -44,13 +44,13 @@ export default function LeafletClient() {
     const bounds = L.latLngBounds([bali, chiangMai]);
     map.fitBounds(bounds, { padding: [80, 80] });
 
-    const resize = () => { try { map.invalidateSize(); } catch (_) {} };
+    const resize = () => { try { map.invalidateSize(); } catch {} };
     window.addEventListener("resize", resize);
     setTimeout(resize, 50);
 
     return () => {
       window.removeEventListener("resize", resize);
-      try { map.remove(); } catch (_) {}
+      try { map.remove(); } catch {}
     };
   }, []);
 
