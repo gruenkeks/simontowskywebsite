@@ -10,19 +10,28 @@ export default function Home() {
   const blockRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const n = 4;
-    const gapPx = 16; // Basis-Gap
+    const n = 4; // Anzahl Buttons
+    const gapPx = 16; // horizontaler Abstand zwischen Buttons
+    const borderPerButton = 2; // 1px links + 1px rechts Rahmen
     const update = () => {
-      // Icon-Größen so berechnen, dass die Reihe der Überschriftbreite entspricht
+      // Icon-Größen exakt an Überschriftenbreite anpassen (inkl. Button-Rahmen)
       const titleW = titleRef.current?.offsetWidth ?? 0;
       if (titleW && iconsRef.current) {
-        const size = Math.max(36, Math.floor((titleW - gapPx * (n - 1)) / n));
+        const totalGaps = gapPx * (n - 1);
+        const totalBorders = borderPerButton * n;
+        const size = Math.max(36, Math.floor((titleW - totalGaps - totalBorders) / n));
         iconsRef.current.style.setProperty("--iconSize", `${size}px`);
         iconsRef.current.style.setProperty("--iconGap", `${gapPx}px`);
       }
-      // Portrait-Höhe = Höhe des Blocks (Überschrift + Icons)
-      const blockH = blockRef.current?.offsetHeight ?? 0;
-      const portrait = Math.min(420, Math.max(100, Math.round(blockH)));
+      // Portrait-Höhe = Höhe von Überschrift + Iconreihe + vertikale Abstände
+      const titleH = titleRef.current?.getBoundingClientRect().height ?? 0;
+      const iconsEl = iconsRef.current;
+      const iconsH = iconsEl?.getBoundingClientRect().height ?? 0;
+      const cs = iconsEl ? getComputedStyle(iconsEl) : null;
+      const mt = cs ? parseFloat(cs.marginTop || "0") : 0;
+      const mb = cs ? parseFloat(cs.marginBottom || "0") : 0;
+      const blockH = titleH + iconsH + mt + mb;
+      const portrait = Math.min(640, Math.max(100, Math.round(blockH)));
       document.documentElement.style.setProperty("--portraitSize", `${portrait}px`);
     };
 
