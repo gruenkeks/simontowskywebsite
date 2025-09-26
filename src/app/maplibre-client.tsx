@@ -26,7 +26,6 @@ export default function LeafletClient() {
       doubleClickZoom: false,
       boxZoom: false,
       keyboard: false,
-      tap: false,
       touchZoom: false,
     });
 
