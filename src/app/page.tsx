@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import MapLibreClient from "./maplibre-client";
+import MapClient from "./maplibre-client";
 import { useEffect, useRef } from "react";
 
 export default function Home() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const iconsRef = useRef<HTMLDivElement>(null);
   const blockRef = useRef<HTMLDivElement>(null);
+  const hoverTimer = useRef<number | null>(null);
 
   useEffect(() => {
     const n = 4; // Anzahl Buttons
@@ -54,7 +55,7 @@ export default function Home() {
     <main className="relative min-h-screen grid grid-rows-[1fr_auto]">
       {/* Background map canvas placeholder; MapLibre added later */}
       <div id="bg-map" className="pointer-events-none fixed inset-0 opacity-10 transition-opacity duration-300" aria-hidden />
-      <MapLibreClient />
+      <MapClient />
 
       {/* Centered hero */}
       <section className="relative z-[1] w-full max-w-[1400px] mx-auto px-6 py-8 grid min-h-[100svh] grid-cols-[1fr_auto_1fr] items-center justify-items-center">
@@ -73,10 +74,32 @@ export default function Home() {
               className="globe-btn inline-flex items-center justify-center rounded-lg border border-[color:var(--line)] bg-white/5 hover:bg-white/15 transition"
               aria-label="Show travel map"
               title="Show travel map"
-              onMouseEnter={() => { document.body.classList.add("map-reveal"); document.body.classList.add("map-only"); }}
-              onMouseLeave={() => { document.body.classList.remove("map-reveal"); document.body.classList.remove("map-only"); }}
-              onFocus={() => { document.body.classList.add("map-reveal"); document.body.classList.add("map-only"); }}
-              onBlur={() => { document.body.classList.remove("map-reveal"); document.body.classList.remove("map-only"); }}
+              onMouseEnter={() => {
+                if (hoverTimer.current) { window.clearTimeout(hoverTimer.current); hoverTimer.current = null; }
+                document.body.classList.add("map-reveal");
+                document.body.classList.add("map-only");
+              }}
+              onMouseLeave={() => {
+                if (hoverTimer.current) window.clearTimeout(hoverTimer.current);
+                hoverTimer.current = window.setTimeout(() => {
+                  document.body.classList.remove("map-reveal");
+                  document.body.classList.remove("map-only");
+                  hoverTimer.current = null;
+                }, 150);
+              }}
+              onFocus={() => {
+                if (hoverTimer.current) { window.clearTimeout(hoverTimer.current); hoverTimer.current = null; }
+                document.body.classList.add("map-reveal");
+                document.body.classList.add("map-only");
+              }}
+              onBlur={() => {
+                if (hoverTimer.current) window.clearTimeout(hoverTimer.current);
+                hoverTimer.current = window.setTimeout(() => {
+                  document.body.classList.remove("map-reveal");
+                  document.body.classList.remove("map-only");
+                  hoverTimer.current = null;
+                }, 150);
+              }}
               style={{ width: "var(--iconSize)", height: "var(--iconSize)" }}
             >
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden style={{ width: "calc(var(--iconSize) * 0.5)", height: "calc(var(--iconSize) * 0.5)" }}>
@@ -145,10 +168,13 @@ export default function Home() {
       </footer>
 
       <style jsx global>{`
+        #bg-map { z-index: 2; }
         body.map-reveal #bg-map { opacity: 0.45; }
-        body.map-only #bg-map { opacity: 0.95; }
+        /* Map beim Hover zeigen, aber nicht interaktiv machen, damit Hover nicht verloren geht */
+        body.map-only #bg-map { opacity: 1; pointer-events: none; }
         .maplibregl-ctrl-attrib { display: none !important; }
-        body.map-only .hide-on-map { opacity: 0; visibility: hidden; pointer-events: none; transform: scale(0.98); transition: opacity 180ms ease, transform 180ms ease; }
+        /* Nur ausblenden, kein transform -> verhindert Flackern */
+        body.map-only .hide-on-map { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 180ms ease; }
         body.map-only .globe-btn { position: relative; z-index: 3; }
       `}</style>
     </main>
