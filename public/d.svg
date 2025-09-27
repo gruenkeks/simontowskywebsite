@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Outer black circle background -->
+  <circle cx="32" cy="32" r="28" fill="#000000"/>
+  <!-- Inner white D, same shape, slightly inset -->
+  <g transform="translate(-0.64 0) translate(32 32) scale(0.56) translate(-32 -32)">
+    <path fill="#ffffff" d="M18 14H34c14 0 20 8 20 18s-6 18-20 18H18V14Z"/>
+    <!-- Very small black D centered within the white D -->
+    <g transform="translate(32 32) translate(2.285714 0) scale(0.2) translate(-32 -32)">
+      <path fill="#000000" d="M18 14H34c14 0 20 8 20 18s-6 18-20 18H18V14Z"/>
+    </g>
+  </g>
+</svg>
+
