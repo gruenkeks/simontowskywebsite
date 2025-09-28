@@ -9,8 +9,8 @@ const bebas = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-  title: "Simontowsky",
-  description: "Simontowsky",
+  title: "Welcome to my personal site",
+  description: "You'll find my contact information & travel plans here.",
   icons: {
     icon: "/d.svg",
     shortcut: "/d.svg",

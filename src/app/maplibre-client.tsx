@@ -46,7 +46,7 @@ export default function LeafletClient() {
 
       const mChiang = L.circleMarker(chiangMai, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 })
         .addTo(map)
-        .bindTooltip("next", { direction: "top", offset: [0, -10] });
+        .bindTooltip("soon", { direction: "top", offset: [0, -10] });
 
       const bounds = L.latLngBounds([bali, chiangMai]);
       map.fitBounds(bounds, { padding: [80, 80] });
