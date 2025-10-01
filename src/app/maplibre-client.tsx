@@ -39,16 +39,21 @@ export default function LeafletClient() {
 
       const bali = L.latLng(-8.4095, 115.1889);
       const chiangMai = L.latLng(18.7883, 98.9853);
+      const weiden = L.latLng(49.6767, 12.1578);
 
       const mBali = L.circleMarker(bali, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 })
         .addTo(map)
-        .bindTooltip("currently", { direction: "top", offset: [0, -10] });
+        .bindTooltip("now", { direction: "top", offset: [0, -10] });
 
       const mChiang = L.circleMarker(chiangMai, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 })
         .addTo(map)
-        .bindTooltip("soon", { direction: "top", offset: [0, -10] });
+        .bindTooltip("October 25", { direction: "top", offset: [0, -10] });
 
-      const bounds = L.latLngBounds([bali, chiangMai]);
+      const mWeiden = L.circleMarker(weiden, { radius: 7, color: "#cfd2d8", weight: 2, fillColor: "#ffffff", fillOpacity: 0.9 })
+        .addTo(map)
+        .bindTooltip("December 13", { direction: "top", offset: [0, -10] });
+
+      const bounds = L.latLngBounds([bali, chiangMai, weiden]);
       map.fitBounds(bounds, { padding: [80, 80] });
 
       const resize = () => { try { map?.invalidateSize(); } catch {} };
@@ -60,9 +65,11 @@ export default function LeafletClient() {
         if (show) {
           mBali.openTooltip();
           mChiang.openTooltip();
+          mWeiden.openTooltip();
         } else {
           mBali.closeTooltip();
           mChiang.closeTooltip();
+          mWeiden.closeTooltip();
         }
       };
       const mo = new MutationObserver(syncTooltips);

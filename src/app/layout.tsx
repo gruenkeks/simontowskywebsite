@@ -12,9 +12,24 @@ export const metadata: Metadata = {
   title: "Welcome to my personal site",
   description: "You'll find my contact information & travel plans here.",
   icons: {
-    icon: "/d.svg",
+    icon: [
+      { url: "/d.svg", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" }
+    ],
     shortcut: "/d.svg",
-    apple: "/d.svg",
+    apple: "/apple-touch-icon.png",
+  },
+  openGraph: {
+    title: "Welcome to my personal site",
+    description: "You'll find my contact information & travel plans here.",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "Welcome to my personal site",
+    description: "You'll find my contact information & travel plans here.",
   },
 };
 
